@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Criar conta · ConsórcioMariussi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="auth-simple">
+
+  <main class="auth-card">
+    <a href="index.html" class="brand auth-card__brand">
+      <span class="brand__mark">CM</span>
+      <span class="brand__name">Consórcio<strong>Mariussi</strong></span>
+    </a>
+
+    <h1 class="auth-card__title">Criar conta</h1>
+
+    <!-- Exemplo de erro vindo da API -->
+    <p class="alert alert--error auth-card__alert">Já existe uma conta com esse e-mail.</p>
+
+    <form action="/auth/cadastro" method="post" class="auth__form">
+      <label class="field">
+        <span>E-mail</span>
+        <input type="email" name="email" required autocomplete="email" class="input" placeholder="voce@email.com">
+      </label>
+
+      <label class="field">
+        <span>Senha</span>
+        <input type="password" name="senha" required minlength="8" autocomplete="new-password" class="input" placeholder="••••••••">
+      </label>
+
+      <button type="submit" class="btn btn--primary btn--block">Criar conta</button>
+    </form>
+
+    <p class="auth__switch">Já tem conta? <a href="login.html" class="link">Entrar</a></p>
+  </main>
+
+</body>
+</html>

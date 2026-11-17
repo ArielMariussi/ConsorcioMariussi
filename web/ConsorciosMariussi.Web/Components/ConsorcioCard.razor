@@ -1,0 +1,49 @@
+@* Um cartão da lista, igual ao <details class="card"> de docs/layout/index.html. *@
+
+<details class="card" open="@Aberto">
+    <summary class="card__head">
+        <div class="card__title">
+            @if (Item.Contemplado)
+            {
+                <span class="badge badge--success">Contemplado</span>
+            }
+            else
+            {
+                <span class="badge">Em andamento</span>
+            }
+            <h2>@Item.Administradora</h2>
+            <span class="muted">Grupo <b class="mono">@Item.Grupo</b> · Cota <b class="mono">@Item.Cota</b></span>
+        </div>
+        <dl class="card__kpis">
+            <div><dt>Crédito</dt><dd>@Formato.Moeda(Item.Credito)</dd></div>
+            <div><dt>Valor pago</dt><dd>@Formato.Moeda(Item.ValorPago)</dd></div>
+            <div><dt>Próx. assembleia</dt><dd>@Formato.Data(Item.Assembleia)</dd></div>
+        </dl>
+        <span class="chevron" aria-hidden="true"></span>
+    </summary>
+    <div class="card__body">
+        <div class="card__actions">
+            <button type="button" class="btn btn--danger" @onclick="() => AoExcluir.InvokeAsync(Item)">Excluir</button>
+            <button type="button" class="btn btn--ghost" @onclick="() => AoEditar.InvokeAsync(Item)">Editar consórcio</button>
+        </div>
+        <div class="grid-info">
+            <div class="info"><span>Data da compra</span><strong>@Formato.Data(Item.DataCompra)</strong></div>
+            <div class="info"><span>Veto</span><strong>@Formato.Data(Item.Veto)</strong></div>
+            <div class="info"><span>Assembleia</span><strong>@Formato.Data(Item.Assembleia)</strong></div>
+            <div class="info"><span>Contemplação</span><strong>@Formato.Data(Item.Contemplacao)</strong></div>
+            <div class="info"><span>Comissão</span><strong>@Formato.Moeda(Item.Comissao)</strong></div>
+            <div class="info"><span>Fundo de reserva</span><strong>@Formato.Moeda(Item.FundoReserva)</strong></div>
+            <div class="info"><span>Taxa de transferência</span><strong>@Formato.Moeda(Item.TaxaTransferencia)</strong></div>
+            <div class="info"><span>Previsão de lucro</span><strong>@Formato.Moeda(Item.PrevisaoLucro)</strong></div>
+            <div class="info"><span>Data do lucro</span><strong>@Formato.Data(Item.DataLucro)</strong></div>
+            <div class="info info--accent"><span>Lucro</span><strong>@Formato.Moeda(Item.Lucro)</strong></div>
+        </div>
+    </div>
+</details>
+
+@code {
+    [Parameter, EditorRequired] public Consorcio Item { get; set; } = default!;
+    [Parameter] public bool Aberto { get; set; }
+    [Parameter] public EventCallback<Consorcio> AoEditar { get; set; }
+    [Parameter] public EventCallback<Consorcio> AoExcluir { get; set; }
+}

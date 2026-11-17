@@ -1,0 +1,88 @@
+@page "/login"
+@layout AuthLayout
+@inject ApiClient Api
+@inject Sessao Sessao
+@inject NavigationManager Nav
+
+<PageTitle>Entrar · ConsórcioMariussi</PageTitle>
+
+<main class="auth-card">
+    <a href="/" class="brand auth-card__brand">
+        <span class="brand__mark">CM</span>
+        <span class="brand__name">Consórcio<strong>Mariussi</strong></span>
+    </a>
+
+    <h1 class="auth-card__title">Entrar</h1>
+
+    @if (Cadastro == 1 && mensagem is null)
+    {
+        <p class="alert auth-card__alert">Conta criada. Entre com seu e-mail e senha.</p>
+    }
+    @if (mensagem is not null)
+    {
+        <p class="alert alert--error auth-card__alert">@mensagem</p>
+    }
+
+    <EditForm EditContext="contexto" OnValidSubmit="EnviarAsync" class="auth__form" novalidate>
+        <DataAnnotationsValidator />
+
+        <label class="field">
+            <span>E-mail</span>
+            <InputText type="email" @bind-Value="form.Email" autocomplete="email" class="input" placeholder="voce@email.com" />
+            <ValidationMessage For="() => form.Email" />
+        </label>
+
+        <label class="field">
+            <span>Senha</span>
+            <InputText type="password" @bind-Value="form.Password" autocomplete="current-password" class="input" placeholder="••••••••" />
+            <ValidationMessage For="() => form.Password" />
+        </label>
+
+        <button type="submit" class="btn btn--primary btn--block" disabled="@enviando">Entrar</button>
+    </EditForm>
+
+    <p class="auth__switch">Ainda não tem conta? <a href="/cadastro" class="link">Criar conta</a></p>
+</main>
+
+@code {
+    [SupplyParameterFromQuery] public int? Expirou { get; set; }
+    [SupplyParameterFromQuery] public int? Cadastro { get; set; }
+
+    private readonly LoginForm form = new();
+    private EditContext contexto = default!;
+    private ValidationMessageStore erros = default!;
+    private string? mensagem;
+    private bool enviando;
+
+    protected override async Task OnInitializedAsync()
+    {
+        contexto = new EditContext(form);
+        erros = new ValidationMessageStore(contexto);
+        contexto.OnFieldChanged += (_, e) => erros.Clear(e.FieldIdentifier);
+
+        if (Expirou == 1)
+            mensagem = "Sua sessão expirou. Entre novamente.";
+
+        if (await Sessao.EstaAutenticadaAsync())
+            Nav.NavigateTo("/");
+    }
+
+    private async Task EnviarAsync()
+    {
+        enviando = true;
+        mensagem = null;
+        erros.Clear();
+
+        var resultado = await Api.EntrarAsync(form);
+        enviando = false;
+
+        if (resultado.Sucesso)
+        {
+            Nav.NavigateTo("/");
+            return;
+        }
+
+        mensagem = resultado.Mensagem;
+        resultado.AplicarErros(contexto, erros);
+    }
+}

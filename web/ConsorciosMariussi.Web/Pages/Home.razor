@@ -1,0 +1,199 @@
+﻿@page "/"
+@inject ApiClient Api
+@inject Sessao Sessao
+@inject NavigationManager Nav
+
+<PageTitle>ConsórcioMariussi</PageTitle>
+
+<main class="container">
+
+    <section class="stats">
+        <article class="stat">
+            <span class="stat__label">Consórcios</span>
+            <span class="stat__value">@lista.Count</span>
+        </article>
+        <article class="stat">
+            <span class="stat__label">Total investido</span>
+            <span class="stat__value">@Formato.Moeda(lista.Sum(c => c.ValorPago ?? 0))</span>
+        </article>
+        <article class="stat">
+            <span class="stat__label">Previsão de lucro</span>
+            <span class="stat__value">@Formato.Moeda(lista.Sum(c => c.PrevisaoLucro ?? 0))</span>
+        </article>
+        <article class="stat stat--accent">
+            <span class="stat__label">Total de lucro</span>
+            <span class="stat__value">@Formato.Moeda(lista.Sum(c => c.Lucro ?? 0))</span>
+        </article>
+    </section>
+
+    <section class="toolbar">
+        <h1 class="page-title">Meus consórcios</h1>
+        <div class="toolbar__filters">
+            <input type="search" class="input" placeholder="Buscar por administradora, grupo, cota…"
+                   @bind="busca" @bind:event="oninput">
+            <select class="input" @bind="situacao">
+                <option value="">Todos</option>
+                <option value="contemplado">Contemplados</option>
+                <option value="andamento">Em andamento</option>
+            </select>
+        </div>
+    </section>
+
+    @if (alerta is not null)
+    {
+        <p class="alert alert--error">@alerta</p>
+    }
+
+    <section class="list">
+        @if (carregando)
+        {
+            <p class="empty">Carregando…</p>
+        }
+        else if (erroCarga is not null)
+        {
+            <p class="alert alert--error">@erroCarga</p>
+            <div><button type="button" class="btn btn--ghost" @onclick="CarregarAsync">Tentar novamente</button></div>
+        }
+        else if (lista.Count == 0)
+        {
+            <p class="empty">Ainda não há consórcios cadastrados.</p>
+        }
+        else if (!Filtrados.Any())
+        {
+            <p class="empty">Nenhum consórcio encontrado.</p>
+        }
+        else
+        {
+            var primeiro = true;
+            foreach (var item in Filtrados)
+            {
+                <ConsorcioCard @key="item.Id" Item="item" Aberto="primeiro"
+                               AoEditar="AbrirEdicao" AoExcluir="AbrirExclusao" />
+                primeiro = false;
+            }
+        }
+    </section>
+</main>
+
+@if (novoModelo is not null)
+{
+    <ConsorcioForm Modelo="novoModelo" Titulo="Novo consórcio" TextoBotao="Criar consórcio"
+                   AoSalvar="CriarAsync" AoFechar="FecharNovo" />
+}
+
+@if (emEdicao is not null)
+{
+    <ConsorcioForm Modelo="emEdicao" Titulo="Editar consórcio" TextoBotao="Salvar alterações"
+                   AoSalvar="AtualizarAsync" AoFechar="() => emEdicao = null" />
+}
+
+@if (emExclusao is not null)
+{
+    <ExcluirConfirm Item="emExclusao" AoConfirmar="ExcluirAsync" AoCancelar="() => emExclusao = null" />
+}
+
+@code {
+    // "+ Novo consórcio" do cabeçalho leva para /?novo=1.
+    [SupplyParameterFromQuery] public int? Novo { get; set; }
+
+    private List<Consorcio> lista = new();
+    private bool carregando = true;
+    private string? erroCarga;
+    private string? alerta;
+
+    private string busca = "";
+    private string situacao = "";
+
+    private Consorcio? novoModelo;
+    private Consorcio? emEdicao;
+    private Consorcio? emExclusao;
+
+    // Busca e filtro atuam só sobre a lista já carregada.
+    private IEnumerable<Consorcio> Filtrados => lista.Where(c =>
+        (situacao == "" || (situacao == "contemplado") == c.Contemplado) &&
+        (busca.Trim() == "" ||
+         c.Administradora.Contains(busca.Trim(), StringComparison.OrdinalIgnoreCase) ||
+         c.Grupo.Contains(busca.Trim(), StringComparison.OrdinalIgnoreCase) ||
+         c.Cota.Contains(busca.Trim(), StringComparison.OrdinalIgnoreCase)));
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (!await Sessao.EstaAutenticadaAsync())
+        {
+            Nav.NavigateTo("/login");
+            return;
+        }
+        await CarregarAsync();
+    }
+
+    protected override void OnParametersSet()
+    {
+        if (Novo == 1 && novoModelo is null)
+            novoModelo = new Consorcio();
+        else if (Novo != 1)
+            novoModelo = null;
+    }
+
+    private async Task CarregarAsync()
+    {
+        carregando = true;
+        erroCarga = null;
+        var resultado = await Api.ListarAsync();
+        carregando = false;
+
+        if (resultado.Sucesso)
+            lista = resultado.Dados!;
+        else
+            erroCarga = resultado.Mensagem;
+    }
+
+    // ---------- Criar ----------
+
+    private async Task<ResultadoApi> CriarAsync(Consorcio c)
+    {
+        var resultado = await Api.CriarAsync(c);
+        if (resultado.Sucesso)
+        {
+            alerta = null;
+            await CarregarAsync();
+        }
+        return resultado;
+    }
+
+    private void FecharNovo() => Nav.NavigateTo("/");
+
+    // ---------- Editar ----------
+
+    private void AbrirEdicao(Consorcio c) => emEdicao = c.Copiar();
+
+    private async Task<ResultadoApi> AtualizarAsync(Consorcio c)
+    {
+        var resultado = await Api.AtualizarAsync(c);
+        if (resultado.Sucesso || resultado.NaoEncontrado)
+        {
+            alerta = resultado.NaoEncontrado ? resultado.Mensagem : null;
+            await CarregarAsync();
+        }
+        return resultado;
+    }
+
+    // ---------- Excluir ----------
+
+    private void AbrirExclusao(Consorcio c) => emExclusao = c;
+
+    private async Task ExcluirAsync()
+    {
+        var resultado = await Api.ExcluirAsync(emExclusao!.Id);
+        emExclusao = null;
+
+        if (resultado.Sucesso || resultado.NaoEncontrado)
+        {
+            alerta = resultado.NaoEncontrado ? resultado.Mensagem : null;
+            await CarregarAsync();
+        }
+        else
+        {
+            alerta = resultado.Mensagem;
+        }
+    }
+}

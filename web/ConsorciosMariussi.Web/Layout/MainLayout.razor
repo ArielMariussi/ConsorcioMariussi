@@ -1,0 +1,29 @@
+﻿@inherits LayoutComponentBase
+@inject Sessao Sessao
+@inject NavigationManager Nav
+
+<header class="topbar">
+    <div class="container topbar__inner">
+        <a href="/" class="brand">
+            <span class="brand__mark">CM</span>
+            <span class="brand__name">Consórcio<strong>Mariussi</strong></span>
+        </a>
+        @* O formulário fica na página principal; ela o abre ao ver ?novo=1. *@
+        <a href="/?novo=1" class="btn btn--primary topbar__center">+ Novo consórcio</a>
+        <button type="button" class="btn btn--danger-solid topbar__logout" @onclick="SairAsync">Logout</button>
+    </div>
+</header>
+
+@Body
+
+<footer class="footer">
+    <div class="container">ConsórcioMariussi · 2026</div>
+</footer>
+
+@code {
+    private async Task SairAsync()
+    {
+        await Sessao.LimparAsync();
+        Nav.NavigateTo("/login");
+    }
+}

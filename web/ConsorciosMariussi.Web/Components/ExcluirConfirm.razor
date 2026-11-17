@@ -1,0 +1,40 @@
+@* Confirmação de exclusão, igual ao modal "Excluir consórcio" de docs/layout/index.html. *@
+
+<div class="modal modal--open" role="alertdialog" aria-labelledby="excluir-titulo">
+    <a href="#" class="modal__backdrop" aria-label="Fechar" @onclick="CancelarAsync" @onclick:preventDefault></a>
+    <div class="modal__box modal__box--sm">
+        <header class="modal__head">
+            <h2 id="excluir-titulo">Excluir consórcio</h2>
+            <a href="#" class="modal__close" aria-label="Fechar" @onclick="CancelarAsync" @onclick:preventDefault>×</a>
+        </header>
+        <div class="confirm">
+            <p>Tem certeza que deseja excluir a cota abaixo? Essa ação não pode ser desfeita.</p>
+            <div class="confirm__item">
+                <strong>@Item.Administradora</strong>
+                <span>Grupo <b class="mono">@Item.Grupo</b> · Cota <b class="mono">@Item.Cota</b></span>
+            </div>
+        </div>
+        <footer class="modal__foot">
+            <a href="#" class="btn btn--ghost" @onclick="CancelarAsync" @onclick:preventDefault>Cancelar</a>
+            <button type="button" class="btn btn--danger-solid" disabled="@enviando" @onclick="ConfirmarAsync">Sim, excluir</button>
+        </footer>
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public Consorcio Item { get; set; } = default!;
+    [Parameter] public EventCallback AoConfirmar { get; set; }
+    [Parameter] public EventCallback AoCancelar { get; set; }
+
+    private bool enviando;
+
+    private async Task ConfirmarAsync()
+    {
+        if (enviando) return;
+        enviando = true;
+        await AoConfirmar.InvokeAsync();
+        enviando = false;
+    }
+
+    private Task CancelarAsync() => AoCancelar.InvokeAsync();
+}

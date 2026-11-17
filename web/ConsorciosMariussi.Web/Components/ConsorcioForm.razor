@@ -1,0 +1,124 @@
+@* Modal de criar/editar, igual ao modal "Novo consórcio" de docs/layout/index.html. *@
+
+<div class="modal modal--open" role="dialog" aria-labelledby="form-consorcio-titulo">
+    <a href="#" class="modal__backdrop" aria-label="Fechar" @onclick="FecharAsync" @onclick:preventDefault></a>
+    <div class="modal__box">
+        <header class="modal__head">
+            <h2 id="form-consorcio-titulo">@Titulo</h2>
+            <a href="#" class="modal__close" aria-label="Fechar" @onclick="FecharAsync" @onclick:preventDefault>×</a>
+        </header>
+
+        <EditForm EditContext="contexto" OnValidSubmit="SalvarAsync" class="form" novalidate>
+            <DataAnnotationsValidator />
+
+            @if (mensagem is not null)
+            {
+                <p class="alert alert--error form__alert">@mensagem</p>
+            }
+
+            <fieldset>
+                <legend>Dados principais</legend>
+                <div class="form__grid">
+                    <label class="field field--full">
+                        <span>Administradora <em>*</em></span>
+                        <InputText @bind-Value="Modelo.Administradora" class="input" placeholder="Ex.: Sicredi" />
+                        <ValidationMessage For="() => Modelo.Administradora" />
+                    </label>
+                    <label class="field">
+                        <span>Grupo <em>*</em></span>
+                        <InputText @bind-Value="Modelo.Grupo" inputmode="numeric" class="input" placeholder="Ex.: 05014" />
+                        <ValidationMessage For="() => Modelo.Grupo" />
+                    </label>
+                    <label class="field">
+                        <span>Cota <em>*</em></span>
+                        <InputText @bind-Value="Modelo.Cota" inputmode="numeric" class="input" placeholder="Ex.: 0361" />
+                        <ValidationMessage For="() => Modelo.Cota" />
+                    </label>
+                    <label class="field">
+                        <span>Crédito (R$)</span>
+                        <InputNumber @bind-Value="Modelo.Credito" step="0.01" class="input" placeholder="0,00" />
+                        <ValidationMessage For="() => Modelo.Credito" />
+                    </label>
+                    <label class="field">
+                        <span>Valor pago (R$)</span>
+                        <InputNumber @bind-Value="Modelo.ValorPago" step="0.01" class="input" placeholder="0,00" />
+                    </label>
+                    <label class="field">
+                        <span>Data da compra</span>
+                        <InputDate @bind-Value="Modelo.DataCompra" class="input" />
+                    </label>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Datas</legend>
+                <div class="form__grid">
+                    <label class="field"><span>Veto</span><InputDate @bind-Value="Modelo.Veto" class="input" /></label>
+                    <label class="field"><span>Assembleia</span><InputDate @bind-Value="Modelo.Assembleia" class="input" /></label>
+                    <label class="field"><span>Contemplação</span><InputDate @bind-Value="Modelo.Contemplacao" class="input" /></label>
+                    <label class="field"><span>Data do lucro</span><InputDate @bind-Value="Modelo.DataLucro" class="input" /></label>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Valores</legend>
+                <div class="form__grid">
+                    <label class="field"><span>Comissão (R$)</span><InputNumber @bind-Value="Modelo.Comissao" step="0.01" class="input" /></label>
+                    <label class="field"><span>Fundo de reserva (R$)</span><InputNumber @bind-Value="Modelo.FundoReserva" step="0.01" class="input" /></label>
+                    <label class="field"><span>Taxa de transferência (R$)</span><InputNumber @bind-Value="Modelo.TaxaTransferencia" step="0.01" class="input" /></label>
+                    <label class="field"><span>Previsão de lucro (R$)</span><InputNumber @bind-Value="Modelo.PrevisaoLucro" step="0.01" class="input" /></label>
+                    <label class="field"><span>Lucro (R$)</span><InputNumber @bind-Value="Modelo.Lucro" step="0.01" class="input" /></label>
+                </div>
+            </fieldset>
+
+            <footer class="modal__foot">
+                <a href="#" class="btn btn--ghost" @onclick="FecharAsync" @onclick:preventDefault>Cancelar</a>
+                <button type="submit" class="btn btn--primary" disabled="@enviando">@TextoBotao</button>
+            </footer>
+        </EditForm>
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public Consorcio Modelo { get; set; } = default!;
+    [Parameter, EditorRequired] public string Titulo { get; set; } = "";
+    [Parameter, EditorRequired] public string TextoBotao { get; set; } = "";
+    [Parameter, EditorRequired] public Func<Consorcio, Task<ResultadoApi>> AoSalvar { get; set; } = default!;
+    [Parameter] public EventCallback AoFechar { get; set; }
+
+    private EditContext contexto = default!;
+    private ValidationMessageStore erros = default!;
+    private string? mensagem;
+    private bool enviando;
+
+    protected override void OnInitialized()
+    {
+        contexto = new EditContext(Modelo);
+        erros = new ValidationMessageStore(contexto);
+        contexto.OnFieldChanged += (_, e) => erros.Clear(e.FieldIdentifier);
+    }
+
+    private async Task SalvarAsync()
+    {
+        if (enviando) return;
+        enviando = true;
+        mensagem = null;
+        erros.Clear();
+
+        Modelo.Administradora = Modelo.Administradora.Trim();
+        var resultado = await AoSalvar(Modelo);
+        enviando = false;
+
+        // "Não encontrado" fecha o modal; a página mostra o aviso e recarrega a lista.
+        if (resultado.Sucesso || resultado.NaoEncontrado)
+        {
+            await AoFechar.InvokeAsync();
+            return;
+        }
+
+        mensagem = resultado.Mensagem;
+        resultado.AplicarErros(contexto, erros);
+    }
+
+    private Task FecharAsync() => AoFechar.InvokeAsync();
+}

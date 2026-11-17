@@ -1,0 +1,36 @@
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: consorcioJoel
+    ports:
+      - "5433:5432"
+    volumes:
+      - consorciojoel-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d consorcioJoel"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+ 
+  api:
+    build: ./api
+    environment:
+      ConnectionStrings__Default: "Host=db;Port=5432;Database=consorcioJoel;Username=postgres;Password=postgres"
+    ports:
+      - "5080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+ 
+  web:
+    build: ./web
+    ports:
+      - "5200:80"
+    depends_on:
+      - api
+ 
+volumes:
+  consorciojoel-data:

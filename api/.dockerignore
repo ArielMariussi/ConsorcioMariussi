@@ -1,0 +1,8 @@
+**/bin
+**/obj
+.specify
+.claude
+specs
+docs
+.vs
+.git

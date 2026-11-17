@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ConsórcioMariussi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ===================== TOPO ===================== -->
+  <header class="topbar">
+    <div class="container topbar__inner">
+      <a href="#" class="brand">
+        <span class="brand__mark">CM</span>
+        <span class="brand__name">Consórcio<strong>Mariussi</strong></span>
+      </a>
+      <a href="#novo" class="btn btn--primary topbar__center">+ Novo consórcio</a>
+      <a href="login.html" class="btn btn--danger-solid topbar__logout">Logout</a>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- ===================== RESUMO ===================== -->
+    <section class="stats">
+      <article class="stat">
+        <span class="stat__label">Consórcios</span>
+        <span class="stat__value">4</span>
+      </article>
+      <!-- Soma de ValorPago -->
+      <article class="stat">
+        <span class="stat__label">Total investido</span>
+        <span class="stat__value">R$ 128.450,00</span>
+      </article>
+      <!-- Soma de PrevisaoLucro -->
+      <article class="stat">
+        <span class="stat__label">Previsão de lucro</span>
+        <span class="stat__value">R$ 55.200,00</span>
+      </article>
+      <!-- Soma de Lucro -->
+      <article class="stat stat--accent">
+        <span class="stat__label">Total de lucro</span>
+        <span class="stat__value">R$ 33.400,00</span>
+      </article>
+    </section>
+
+    <!-- ===================== FILTROS ===================== -->
+    <section class="toolbar">
+      <h1 class="page-title">Meus consórcios</h1>
+      <form class="toolbar__filters" action="#" method="get">
+        <input type="search" name="busca" placeholder="Buscar por administradora, grupo, cota…" class="input">
+        <select name="status" class="input">
+          <option value="">Todos</option>
+          <option value="contemplado">Contemplados</option>
+          <option value="andamento">Em andamento</option>
+        </select>
+      </form>
+    </section>
+
+    <!-- ===================== LISTA ===================== -->
+    <section class="list">
+
+      <!-- ---------- Sicredi ---------- -->
+      <details class="card" open>
+        <summary class="card__head">
+          <div class="card__title">
+            <span class="badge">Em andamento</span>
+            <h2>Sicredi</h2>
+            <span class="muted">Grupo <b class="mono">05014</b> · Cota <b class="mono">0361</b></span>
+          </div>
+          <dl class="card__kpis">
+            <div><dt>Crédito</dt><dd>R$ 200.000,00</dd></div>
+            <div><dt>Valor pago</dt><dd>R$ 30.000,00</dd></div>
+            <div><dt>Próx. assembleia</dt><dd>13/07/2026</dd></div>
+          </dl>
+          <span class="chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="card__body">
+          <div class="card__actions">
+            <a href="#excluir-4" class="btn btn--danger">Excluir</a>
+            <a href="#editar-4" class="btn btn--ghost">Editar consórcio</a>
+          </div>
+          <div class="grid-info">
+            <div class="info"><span>Data da compra</span><strong>07/07/2026</strong></div>
+            <div class="info"><span>Veto</span><strong>08/07/2026</strong></div>
+            <div class="info"><span>Assembleia</span><strong>13/07/2026</strong></div>
+            <div class="info"><span>Contemplação</span><strong>—</strong></div>
+            <div class="info"><span>Comissão</span><strong>R$ 12.000,00</strong></div>
+            <div class="info"><span>Fundo de reserva</span><strong>R$ 5.400,00</strong></div>
+            <div class="info"><span>Taxa de transferência</span><strong>R$ 300,00</strong></div>
+            <div class="info"><span>Previsão de lucro</span><strong>R$ 14.000,00</strong></div>
+            <div class="info"><span>Data do lucro</span><strong>—</strong></div>
+            <div class="info info--accent"><span>Lucro</span><strong>R$ 14.000,00</strong></div>
+          </div>
+        </div>
+      </details>
+
+      <!-- ---------- Porto Seguro ---------- -->
+      <details class="card">
+        <summary class="card__head">
+          <div class="card__title">
+            <span class="badge badge--success">Contemplado</span>
+            <h2>Porto Seguro</h2>
+            <span class="muted">Grupo <b class="mono">01043</b> · Cota <b class="mono">0012</b></span>
+          </div>
+          <dl class="card__kpis">
+            <div><dt>Crédito</dt><dd>R$ 300.000,00</dd></div>
+            <div><dt>Valor pago</dt><dd>R$ 52.300,00</dd></div>
+            <div><dt>Próx. assembleia</dt><dd>15/11/2026</dd></div>
+          </dl>
+          <span class="chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="card__body">
+          <div class="card__actions">
+            <a href="#excluir-1" class="btn btn--danger">Excluir</a>
+            <a href="#editar-1" class="btn btn--ghost">Editar consórcio</a>
+          </div>
+          <div class="grid-info">
+            <div class="info"><span>Data da compra</span><strong>10/03/2025</strong></div>
+            <div class="info"><span>Veto</span><strong>10/04/2025</strong></div>
+            <div class="info"><span>Assembleia</span><strong>15/11/2026</strong></div>
+            <div class="info"><span>Contemplação</span><strong>15/09/2026</strong></div>
+            <div class="info"><span>Comissão</span><strong>R$ 6.000,00</strong></div>
+            <div class="info"><span>Fundo de reserva</span><strong>R$ 3.000,00</strong></div>
+            <div class="info"><span>Taxa de transferência</span><strong>R$ 850,00</strong></div>
+            <div class="info"><span>Previsão de lucro</span><strong>R$ 22.000,00</strong></div>
+            <div class="info"><span>Data do lucro</span><strong>20/12/2026</strong></div>
+            <div class="info info--accent"><span>Lucro</span><strong>R$ 19.400,00</strong></div>
+          </div>
+        </div>
+      </details>
+
+      <!-- ---------- Embracon ---------- -->
+      <details class="card">
+        <summary class="card__head">
+          <div class="card__title">
+            <span class="badge">Em andamento</span>
+            <h2>Embracon</h2>
+            <span class="muted">Grupo <b class="mono">00587</b> · Cota <b class="mono">0305</b></span>
+          </div>
+          <dl class="card__kpis">
+            <div><dt>Crédito</dt><dd>R$ 220.000,00</dd></div>
+            <div><dt>Valor pago</dt><dd>R$ 31.150,00</dd></div>
+            <div><dt>Próx. assembleia</dt><dd>22/11/2026</dd></div>
+          </dl>
+          <span class="chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="card__body">
+          <div class="card__actions">
+            <a href="#excluir-2" class="btn btn--danger">Excluir</a>
+            <a href="#editar-1" class="btn btn--ghost">Editar consórcio</a>
+          </div>
+          <div class="grid-info">
+            <div class="info"><span>Data da compra</span><strong>02/08/2025</strong></div>
+            <div class="info"><span>Veto</span><strong>—</strong></div>
+            <div class="info"><span>Assembleia</span><strong>22/11/2026</strong></div>
+            <div class="info"><span>Contemplação</span><strong>—</strong></div>
+            <div class="info"><span>Comissão</span><strong>R$ 4.400,00</strong></div>
+            <div class="info"><span>Fundo de reserva</span><strong>R$ 2.200,00</strong></div>
+            <div class="info"><span>Taxa de transferência</span><strong>—</strong></div>
+            <div class="info"><span>Previsão de lucro</span><strong>R$ 19.200,00</strong></div>
+            <div class="info"><span>Data do lucro</span><strong>—</strong></div>
+            <div class="info info--accent"><span>Lucro</span><strong>—</strong></div>
+          </div>
+        </div>
+      </details>
+
+      <!-- ---------- Rodobens ---------- -->
+      <details class="card">
+        <summary class="card__head">
+          <div class="card__title">
+            <span class="badge">Em andamento</span>
+            <h2>Rodobens</h2>
+            <span class="muted">Grupo <b class="mono">02210</b> · Cota <b class="mono">0088</b></span>
+          </div>
+          <dl class="card__kpis">
+            <div><dt>Crédito</dt><dd>R$ 120.000,00</dd></div>
+            <div><dt>Valor pago</dt><dd>R$ 15.000,00</dd></div>
+            <div><dt>Próx. assembleia</dt><dd>—</dd></div>
+          </dl>
+          <span class="chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="card__body">
+          <div class="card__actions">
+            <a href="#excluir-3" class="btn btn--danger">Excluir</a>
+            <a href="#editar-1" class="btn btn--ghost">Editar consórcio</a>
+          </div>
+          <div class="grid-info">
+            <div class="info"><span>Data da compra</span><strong>18/01/2026</strong></div>
+            <div class="info"><span>Veto</span><strong>—</strong></div>
+            <div class="info"><span>Assembleia</span><strong>—</strong></div>
+            <div class="info"><span>Contemplação</span><strong>—</strong></div>
+            <div class="info"><span>Comissão</span><strong>—</strong></div>
+            <div class="info"><span>Fundo de reserva</span><strong>—</strong></div>
+            <div class="info"><span>Taxa de transferência</span><strong>—</strong></div>
+            <div class="info"><span>Previsão de lucro</span><strong>—</strong></div>
+            <div class="info"><span>Data do lucro</span><strong>—</strong></div>
+            <div class="info info--accent"><span>Lucro</span><strong>—</strong></div>
+          </div>
+        </div>
+      </details>
+
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">ConsórcioMariussi · 2026</div>
+  </footer>
+
+
+  <!-- ===================== MODAL: CRIAR ===================== -->
+  <div id="novo" class="modal" role="dialog" aria-labelledby="novo-title">
+    <a href="#" class="modal__backdrop" aria-label="Fechar"></a>
+    <div class="modal__box">
+      <header class="modal__head">
+        <h2 id="novo-title">Novo consórcio</h2>
+        <a href="#" class="modal__close" aria-label="Fechar">×</a>
+      </header>
+
+      <form action="/consorcios" method="post" class="form">
+        <!-- Exemplo de erro do índice único (Administradora + Grupo + Cota) -->
+        <p class="alert alert--error form__alert">Já existe um consórcio dessa administradora com esse grupo e cota.</p>
+
+        <fieldset>
+          <legend>Dados principais</legend>
+          <div class="form__grid">
+            <label class="field field--full">
+              <span>Administradora <em>*</em></span>
+              <input type="text" name="administradora" required class="input" placeholder="Ex.: Sicredi">
+            </label>
+            <label class="field">
+              <span>Grupo <em>*</em></span>
+              <input type="text" name="grupo" required inputmode="numeric" pattern="\d+" class="input" placeholder="Ex.: 05014">
+            </label>
+            <label class="field">
+              <span>Cota <em>*</em></span>
+              <input type="text" name="cota" required inputmode="numeric" pattern="\d+" class="input" placeholder="Ex.: 0361">
+            </label>
+            <label class="field">
+              <span>Crédito (R$)</span>
+              <input type="number" name="credito" min="0" step="0.01" class="input" placeholder="0,00">
+            </label>
+            <label class="field">
+              <span>Valor pago (R$)</span>
+              <input type="number" name="valorPago" step="0.01" class="input" placeholder="0,00">
+            </label>
+            <label class="field">
+              <span>Data da compra</span>
+              <input type="date" name="dataCompra" class="input">
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Datas</legend>
+          <div class="form__grid">
+            <label class="field"><span>Veto</span><input type="date" name="veto" class="input"></label>
+            <label class="field"><span>Assembleia</span><input type="date" name="assembleia" class="input"></label>
+            <label class="field"><span>Contemplação</span><input type="date" name="contemplacao" class="input"></label>
+            <label class="field"><span>Data do lucro</span><input type="date" name="dataLucro" class="input"></label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Valores</legend>
+          <div class="form__grid">
+            <label class="field"><span>Comissão (R$)</span><input type="number" name="comissao" step="0.01" class="input"></label>
+            <label class="field"><span>Fundo de reserva (R$)</span><input type="number" name="fundoReserva" step="0.01" class="input"></label>
+            <label class="field"><span>Taxa de transferência (R$)</span><input type="number" name="taxaTransferencia" step="0.01" class="input"></label>
+            <label class="field"><span>Previsão de lucro (R$)</span><input type="number" name="previsaoLucro" step="0.01" class="input"></label>
+            <label class="field"><span>Lucro (R$)</span><input type="number" name="lucro" step="0.01" class="input"></label>
+          </div>
+        </fieldset>
+
+        <footer class="modal__foot">
+          <a href="#" class="btn btn--ghost">Cancelar</a>
+          <button type="submit" class="btn btn--primary">Criar consórcio</button>
+        </footer>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- ===================== MODAL: ATUALIZAR (Sicredi) ===================== -->
+  <div id="editar-4" class="modal" role="dialog" aria-labelledby="editar4-title">
+    <a href="#" class="modal__backdrop" aria-label="Fechar"></a>
+    <div class="modal__box">
+      <header class="modal__head">
+        <h2 id="editar4-title">Editar consórcio</h2>
+        <a href="#" class="modal__close" aria-label="Fechar">×</a>
+      </header>
+
+      <form action="/consorcios/4" method="post" class="form">
+        <input type="hidden" name="_method" value="put">
+        <fieldset>
+          <legend>Dados principais</legend>
+          <div class="form__grid">
+            <label class="field field--full">
+              <span>Administradora <em>*</em></span>
+              <input type="text" name="administradora" required class="input" value="Sicredi">
+            </label>
+            <label class="field">
+              <span>Grupo <em>*</em></span>
+              <input type="text" name="grupo" required inputmode="numeric" pattern="\d+" class="input" value="05014">
+            </label>
+            <label class="field">
+              <span>Cota <em>*</em></span>
+              <input type="text" name="cota" required inputmode="numeric" pattern="\d+" class="input" value="0361">
+            </label>
+            <label class="field">
+              <span>Crédito (R$)</span>
+              <input type="number" name="credito" min="0" step="0.01" class="input" value="200000.00">
+            </label>
+            <label class="field">
+              <span>Valor pago (R$)</span>
+              <input type="number" name="valorPago" step="0.01" class="input" value="30000.00">
+            </label>
+            <label class="field">
+              <span>Data da compra</span>
+              <input type="date" name="dataCompra" class="input" value="2026-07-07">
+            </label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Datas</legend>
+          <div class="form__grid">
+            <label class="field"><span>Veto</span><input type="date" name="veto" class="input" value="2026-07-08"></label>
+            <label class="field"><span>Assembleia</span><input type="date" name="assembleia" class="input" value="2026-07-13"></label>
+            <label class="field"><span>Contemplação</span><input type="date" name="contemplacao" class="input"></label>
+            <label class="field"><span>Data do lucro</span><input type="date" name="dataLucro" class="input"></label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Valores</legend>
+          <div class="form__grid">
+            <label class="field"><span>Comissão (R$)</span><input type="number" name="comissao" step="0.01" class="input" value="12000.00"></label>
+            <label class="field"><span>Fundo de reserva (R$)</span><input type="number" name="fundoReserva" step="0.01" class="input" value="5400.00"></label>
+            <label class="field"><span>Taxa de transferência (R$)</span><input type="number" name="taxaTransferencia" step="0.01" class="input" value="300.00"></label>
+            <label class="field"><span>Previsão de lucro (R$)</span><input type="number" name="previsaoLucro" step="0.01" class="input" value="14000.00"></label>
+            <label class="field"><span>Lucro (R$)</span><input type="number" name="lucro" step="0.01" class="input" value="14000.00"></label>
+          </div>
+        </fieldset>
+        <footer class="modal__foot">
+          <a href="#" class="btn btn--ghost">Cancelar</a>
+          <button type="submit" class="btn btn--primary">Salvar alterações</button>
+        </footer>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- ===================== MODAL: ATUALIZAR (Porto Seguro) ===================== -->
+  <div id="editar-1" class="modal" role="dialog" aria-labelledby="editar1-title">
+    <a href="#" class="modal__backdrop" aria-label="Fechar"></a>
+    <div class="modal__box">
+      <header class="modal__head">
+        <h2 id="editar1-title">Editar consórcio</h2>
+        <a href="#" class="modal__close" aria-label="Fechar">×</a>
+      </header>
+
+      <form action="/consorcios/1" method="post" class="form">
+        <input type="hidden" name="_method" value="put">
+        <fieldset>
+          <legend>Dados principais</legend>
+          <div class="form__grid">
+            <label class="field field--full">
+              <span>Administradora <em>*</em></span>
+              <input type="text" name="administradora" required class="input" value="Porto Seguro">
+            </label>
+            <label class="field">
+              <span>Grupo <em>*</em></span>
+              <input type="text" name="grupo" required inputmode="numeric" pattern="\d+" class="input" value="01043">
+            </label>
+            <label class="field">
+              <span>Cota <em>*</em></span>
+              <input type="text" name="cota" required inputmode="numeric" pattern="\d+" class="input" value="0012">
+            </label>
+            <label class="field">
+              <span>Crédito (R$)</span>
+              <input type="number" name="credito" min="0" step="0.01" class="input" value="300000.00">
+            </label>
+            <label class="field">
+              <span>Valor pago (R$)</span>
+              <input type="number" name="valorPago" step="0.01" class="input" value="52300.00">
+            </label>
+            <label class="field">
+              <span>Data da compra</span>
+              <input type="date" name="dataCompra" class="input" value="2025-03-10">
+            </label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Datas</legend>
+          <div class="form__grid">
+            <label class="field"><span>Veto</span><input type="date" name="veto" class="input" value="2025-04-10"></label>
+            <label class="field"><span>Assembleia</span><input type="date" name="assembleia" class="input" value="2026-11-15"></label>
+            <label class="field"><span>Contemplação</span><input type="date" name="contemplacao" class="input" value="2026-09-15"></label>
+            <label class="field"><span>Data do lucro</span><input type="date" name="dataLucro" class="input" value="2026-12-20"></label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Valores</legend>
+          <div class="form__grid">
+            <label class="field"><span>Comissão (R$)</span><input type="number" name="comissao" step="0.01" class="input" value="6000.00"></label>
+            <label class="field"><span>Fundo de reserva (R$)</span><input type="number" name="fundoReserva" step="0.01" class="input" value="3000.00"></label>
+            <label class="field"><span>Taxa de transferência (R$)</span><input type="number" name="taxaTransferencia" step="0.01" class="input" value="850.00"></label>
+            <label class="field"><span>Previsão de lucro (R$)</span><input type="number" name="previsaoLucro" step="0.01" class="input" value="22000.00"></label>
+            <label class="field"><span>Lucro (R$)</span><input type="number" name="lucro" step="0.01" class="input" value="19400.00"></label>
+          </div>
+        </fieldset>
+        <footer class="modal__foot">
+          <a href="#" class="btn btn--ghost">Cancelar</a>
+          <button type="submit" class="btn btn--primary">Salvar alterações</button>
+        </footer>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- ===================== MODAIS: EXCLUIR ===================== -->
+  <div id="excluir-4" class="modal" role="alertdialog" aria-labelledby="excluir4-title">
+    <a href="#" class="modal__backdrop" aria-label="Fechar"></a>
+    <div class="modal__box modal__box--sm">
+      <header class="modal__head">
+        <h2 id="excluir4-title">Excluir consórcio</h2>
+        <a href="#" class="modal__close" aria-label="Fechar">×</a>
+      </header>
+      <form action="/consorcios/4" method="post">
+        <input type="hidden" name="_method" value="delete">
+        <div class="confirm">
+          <p>Tem certeza que deseja excluir a cota abaixo? Essa ação não pode ser desfeita.</p>
+          <div class="confirm__item">
+            <strong>Sicredi</strong>
+            <span>Grupo <b class="mono">05014</b> · Cota <b class="mono">0361</b></span>
+          </div>
+        </div>
+        <footer class="modal__foot">
+          <a href="#" class="btn btn--ghost">Cancelar</a>
+          <button type="submit" class="btn btn--danger-solid">Sim, excluir</button>
+        </footer>
+      </form>
+    </div>
+  </div>
+
+  <div id="excluir-1" class="modal" role="alertdialog" aria-labelledby="excluir1-title">
+    <a href="#" class="modal__backdrop" aria-label="Fechar"></a>
+    <div class="modal__box modal__box--sm">
+      <header class="modal__head">
+        <h2 id="excluir1-title">Excluir consórcio</h2>
+        <a href="#" class="modal__close" aria-label="Fechar">×</a>
+      </header>
+      <form action="/consorcios/1" method="post">
+        <input type="hidden" name="_method" value="delete">
+        <div class="confirm">
+          <p>Tem certeza que deseja excluir a cota abaixo? Essa ação não pode ser desfeita.</p>
+          <div class="confirm__item">
+            <strong>Porto Seguro</strong>
+            <span>Grupo <b class="mono">01043</b> · Cota <b class="mono">0012</b></span>
+          </div>
+        </div>
+        <footer class="modal__foot">
+          <a href="#" class="btn btn--ghost">Cancelar</a>
+          <button type="submit" class="btn btn--danger-solid">Sim, excluir</button>
+        </footer>
+      </form>
+    </div>
+  </div>
+
+  <div id="excluir-2" class="modal" role="alertdialog" aria-labelledby="excluir2-title">
+    <a href="#" class="modal__backdrop" aria-label="Fechar"></a>
+    <div class="modal__box modal__box--sm">
+      <header class="modal__head">
+        <h2 id="excluir2-title">Excluir consórcio</h2>
+        <a href="#" class="modal__close" aria-label="Fechar">×</a>
+      </header>
+      <form action="/consorcios/2" method="post">
+        <input type="hidden" name="_method" value="delete">
+        <div class="confirm">
+          <p>Tem certeza que deseja excluir a cota abaixo? Essa ação não pode ser desfeita.</p>
+          <div class="confirm__item">
+            <strong>Embracon</strong>
+            <span>Grupo <b class="mono">00587</b> · Cota <b class="mono">0305</b></span>
+          </div>
+        </div>
+        <footer class="modal__foot">
+          <a href="#" class="btn btn--ghost">Cancelar</a>
+          <button type="submit" class="btn btn--danger-solid">Sim, excluir</button>
+        </footer>
+      </form>
+    </div>
+  </div>
+
+  <div id="excluir-3" class="modal" role="alertdialog" aria-labelledby="excluir3-title">
+    <a href="#" class="modal__backdrop" aria-label="Fechar"></a>
+    <div class="modal__box modal__box--sm">
+      <header class="modal__head">
+        <h2 id="excluir3-title">Excluir consórcio</h2>
+        <a href="#" class="modal__close" aria-label="Fechar">×</a>
+      </header>
+      <form action="/consorcios/3" method="post">
+        <input type="hidden" name="_method" value="delete">
+        <div class="confirm">
+          <p>Tem certeza que deseja excluir a cota abaixo? Essa ação não pode ser desfeita.</p>
+          <div class="confirm__item">
+            <strong>Rodobens</strong>
+            <span>Grupo <b class="mono">02210</b> · Cota <b class="mono">0088</b></span>
+          </div>
+        </div>
+        <footer class="modal__foot">
+          <a href="#" class="btn btn--ghost">Cancelar</a>
+          <button type="submit" class="btn btn--danger-solid">Sim, excluir</button>
+        </footer>
+      </form>
+    </div>
+  </div>
+
+</body>
+</html>
