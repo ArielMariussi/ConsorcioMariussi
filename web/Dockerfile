@@ -12,4 +12,11 @@ RUN dotnet publish ConsorciosMariussi.Web/ConsorciosMariussi.Web.csproj -c Relea
 FROM nginx:alpine
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /app/publish/wwwroot /usr/share/nginx/html
+
+# Gera o appsettings.json a partir da variável API_BASE_URL, se ela existir.
+# O sed remove quebras de linha do Windows (CRLF), que impediriam o script de rodar.
+COPY docker-entrypoint.d/40-appsettings.sh /docker-entrypoint.d/40-appsettings.sh
+RUN sed -i 's/\r$//' /docker-entrypoint.d/40-appsettings.sh \
+    && chmod +x /docker-entrypoint.d/40-appsettings.sh
+
 EXPOSE 80

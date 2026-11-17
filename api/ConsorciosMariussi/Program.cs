@@ -43,8 +43,12 @@ builder.Services
     });
 builder.Services.AddAuthorization();
 
+// Origens do front liberadas, separadas por vírgula (Cors:Origins; no container: Cors__Origins).
+var origensFront = builder.Configuration["Cors:Origins"]!
+    .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
 builder.Services.AddCors(o => o.AddPolicy("Frontend", p => p
-    .WithOrigins("http://localhost:5200")
+    .WithOrigins(origensFront)
     .AllowAnyHeader()
     .AllowAnyMethod()
     .WithExposedHeaders("Location")));
