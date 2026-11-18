@@ -9,7 +9,7 @@ public record ConsorcioRequest(
     decimal? Credito,
     decimal? ValorPago,
     DateOnly? DataCompra,
-    DateOnly? Veto,
+    DateOnly? Vencimento,
     DateOnly? Assembleia,
     decimal? Comissao,
     decimal? PrevisaoLucro,

@@ -15,7 +15,7 @@ Banco: PostgreSQL (serviço `db`), com o esquema criado pela migration `InitialC
 | Credito | `decimal?` | `numeric(18,2)` | sim | `>= 0` quando informado; FR-005 |
 | ValorPago | `decimal?` | `numeric(18,2)` | sim | FR-006 |
 | DataCompra | `DateOnly?` | `date` | sim | FR-007 |
-| Veto | `DateOnly?` | `date` | sim | FR-007 |
+| Vencimento | `DateOnly?` | `date` | sim | FR-007 |
 | Assembleia | `DateOnly?` | `date` | sim | FR-007 |
 | Comissao | `decimal?` | `numeric(18,2)` | sim | FR-006 |
 | PrevisaoLucro | `decimal?` | `numeric(18,2)` | sim | FR-006 |
@@ -55,7 +55,7 @@ Record em `Contracts/ConsorcioRequest.cs`: todos os campos do contrato **exceto 
 | Cota | `string?` | `cota`: obrigatória; só `'0'..'9'`; até 20 caracteres |
 | Credito | `decimal?` | `credito`: não pode ser negativo |
 | ValorPago, Comissao, PrevisaoLucro, FundoReserva, TaxaTransferencia, Lucro | `decimal?` | sem regra |
-| DataCompra, Veto, Assembleia, Contemplacao, DataLucro | `DateOnly?` | sem regra (formato inválido → 400 da desserialização) |
+| DataCompra, Vencimento, Assembleia, Contemplacao, DataLucro | `DateOnly?` | sem regra (formato inválido → 400 da desserialização) |
 
 Mapeamento manual para a entidade (`ApplyRequest`): copia todos os campos; `Administradora` é aparada pelo setter; decimais são arredondados para 2 casas com escala fixa (research R18). Em PUT, o mesmo método sobrescreve **todos** os campos da entidade existente.
 

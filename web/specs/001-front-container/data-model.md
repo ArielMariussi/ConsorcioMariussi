@@ -40,7 +40,7 @@ Transições: Sem sessão → (login 200) → Autenticada → (Logout, fechar ab
 | credito | decimal? | não | ≥ 0 ("O crédito não pode ser negativo.") | moeda |
 | valorPago | decimal? | não | — | moeda |
 | dataCompra | DateOnly? | não | — | dd/mm/aaaa |
-| veto | DateOnly? | não | — | dd/mm/aaaa |
+| vencimento | DateOnly? | não | — | dd/mm/aaaa |
 | assembleia | DateOnly? | não | — | dd/mm/aaaa (também "Próx. assembleia") |
 | comissao | decimal? | não | — | moeda |
 | previsaoLucro | decimal? | não | — | moeda |

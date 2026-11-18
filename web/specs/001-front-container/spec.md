@@ -286,7 +286,7 @@ grupo e cota) e o consórcio sai da lista.
   automática, e mantido apenas enquanto a aba do navegador estiver aberta.
 - **Consórcio**: cota de consórcio acompanhada pela pessoa. Identificado pela combinação única
   administradora + grupo + cota. Tem valores (crédito, valor pago, comissão, fundo de reserva,
-  taxa de transferência, previsão de lucro, lucro) e datas (compra, veto, assembleia,
+  taxa de transferência, previsão de lucro, lucro) e datas (compra, vencimento, assembleia,
   contemplação, data do lucro). Situação derivada: "Contemplado" quando há data de contemplação;
   caso contrário, "Em andamento".
 

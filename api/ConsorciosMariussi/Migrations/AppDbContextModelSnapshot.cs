@@ -85,7 +85,7 @@ namespace ConsorciosMariussi.Api.Migrations
                         .HasPrecision(18, 2)
                         .HasColumnType("numeric(18,2)");
 
-                    b.Property<DateOnly?>("Veto")
+                    b.Property<DateOnly?>("Vencimento")
                         .HasColumnType("date");
 
                     b.HasKey("Id");

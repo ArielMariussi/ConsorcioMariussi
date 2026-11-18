@@ -127,7 +127,7 @@ public static class ConsorcioEndpoints
         c.Credito = Round2(r.Credito);
         c.ValorPago = Round2(r.ValorPago);
         c.DataCompra = r.DataCompra;
-        c.Veto = r.Veto;
+        c.Vencimento = r.Vencimento;
         c.Assembleia = r.Assembleia;
         c.Comissao = Round2(r.Comissao);
         c.PrevisaoLucro = Round2(r.PrevisaoLucro);

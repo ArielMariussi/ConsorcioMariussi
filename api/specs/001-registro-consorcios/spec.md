@@ -142,13 +142,13 @@ Como usuário do front-end, eu quero cadastrar, listar, consultar, editar e excl
 
 **Registro de consórcio**
 
-- **FR-001**: A plataforma MUST guardar registros de consórcio com exatamente os campos definidos em `docs/contrato-api.md`: id, administradora, grupo, cota, credito, valorPago, dataCompra, veto, assembleia, comissao, previsaoLucro, fundoReserva, contemplacao, taxaTransferencia, dataLucro e lucro.
+- **FR-001**: A plataforma MUST guardar registros de consórcio com exatamente os campos definidos em `docs/contrato-api.md`: id, administradora, grupo, cota, credito, valorPago, dataCompra, vencimento, assembleia, comissao, previsaoLucro, fundoReserva, contemplacao, taxaTransferencia, dataLucro e lucro.
 - **FR-002**: Cada registro MUST receber um identificador numérico inteiro único, gerado pela plataforma.
 - **FR-003**: Administradora MUST ser obrigatória e MUST ser armazenada sem espaços nas pontas; um valor vazio após essa remoção MUST ser rejeitado.
 - **FR-004**: Grupo e cota MUST ser obrigatórios, MUST conter somente dígitos (0–9) e MUST ser armazenados como texto, preservando zeros à esquerda.
 - **FR-005**: Crédito MUST ser opcional e, quando informado, MUST NOT ser negativo.
 - **FR-006**: Valor pago, comissão, previsão de lucro, fundo de reserva, taxa de transferência e lucro MUST ser opcionais e armazenados como valores monetários com 2 casas decimais.
-- **FR-007**: Data da compra, veto, assembleia, contemplação e data do lucro MUST ser opcionais e armazenadas como datas de calendário (dia, mês, ano), sem componente de hora ou fuso.
+- **FR-007**: Data da compra, vencimento, assembleia, contemplação e data do lucro MUST ser opcionais e armazenadas como datas de calendário (dia, mês, ano), sem componente de hora ou fuso.
 - **FR-008**: A combinação administradora + grupo + cota MUST ser única entre todos os registros, com a administradora comparada sem diferenciar maiúsculas de minúsculas (e após remover os espaços das pontas); uma gravação que viole essa regra MUST ser rejeitada. A administradora MUST ser armazenada com a grafia informada.
 - **FR-009**: As regras FR-003 a FR-008 MUST ser garantidas pelo próprio armazenamento, de modo que nenhum registro inválido possa ser persistido, mesmo por um caminho de gravação futuro que esqueça de validar.
 
@@ -195,7 +195,7 @@ Como usuário do front-end, eu quero cadastrar, listar, consultar, editar e excl
 
 ### Key Entities
 
-- **Consorcio**: uma cota de consórcio adquirida e acompanhada pela plataforma. Identificada por um id numérico e, de forma única no negócio, pela combinação administradora + grupo + cota. Guarda o valor do crédito, quanto foi pago, as datas relevantes do ciclo (compra, veto, assembleia, contemplação, lucro) e os valores financeiros associados (comissão, previsão de lucro, fundo de reserva, taxa de transferência, lucro).
+- **Consorcio**: uma cota de consórcio adquirida e acompanhada pela plataforma. Identificada por um id numérico e, de forma única no negócio, pela combinação administradora + grupo + cota. Guarda o valor do crédito, quanto foi pago, as datas relevantes do ciclo (compra, vencimento, assembleia, contemplação, lucro) e os valores financeiros associados (comissão, previsão de lucro, fundo de reserva, taxa de transferência, lucro).
 - **Token de acesso**: credencial temporária (60 minutos) emitida no login, que identifica o usuário nas chamadas aos endpoints de consórcio.
 - **Usuário**: pessoa que acessa a plataforma. Identificado de forma única pelo e-mail (sem diferenciar maiúsculas de minúsculas) e autenticado por senha, guardada de forma não legível.
 

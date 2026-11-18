@@ -25,7 +25,7 @@ public class Consorcio
 
     public decimal? ValorPago { get; set; }
     public DateOnly? DataCompra { get; set; }
-    public DateOnly? Veto { get; set; }
+    public DateOnly? Vencimento { get; set; }
     public DateOnly? Assembleia { get; set; }
     public decimal? Comissao { get; set; }
     public decimal? PrevisaoLucro { get; set; }

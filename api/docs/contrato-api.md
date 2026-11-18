@@ -32,7 +32,7 @@ A senha nunca é retornada em nenhuma resposta.
 | credito | decimal \| null | Não pode ser negativo |
 | valorPago | decimal \| null | Opcional |
 | dataCompra | string (date) \| null | Opcional |
-| veto | string (date) \| null | Opcional |
+| vencimento | string (date) \| null | Opcional |
 | assembleia | string (date) \| null | Opcional |
 | comissao | decimal \| null | Opcional |
 | previsaoLucro | decimal \| null | Opcional |
@@ -96,7 +96,7 @@ Resposta 200:
     "credito": 200000.00,
     "valorPago": 30000.00,
     "dataCompra": "2026-07-07",
-    "veto": "2026-07-08",
+    "vencimento": "2026-07-08",
     "assembleia": "2026-07-13",
     "comissao": null,
     "previsaoLucro": 14000.00,
@@ -126,7 +126,7 @@ Corpo: todos os campos do Consorcio, exceto id.
   "credito": 200000.00,
   "valorPago": 30000.00,
   "dataCompra": "2026-07-07",
-  "veto": "2026-07-08",
+  "vencimento": "2026-07-08",
   "assembleia": "2026-07-13",
   "comissao": null,
   "previsaoLucro": 14000.00,

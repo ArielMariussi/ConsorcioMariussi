@@ -137,7 +137,7 @@ public class ApiClient(HttpClient http, Sessao sessao, NavigationManager nav)
         credito = c.Credito,
         valorPago = c.ValorPago,
         dataCompra = c.DataCompra,
-        veto = c.Veto,
+        vencimento = c.Vencimento,
         assembleia = c.Assembleia,
         comissao = c.Comissao,
         previsaoLucro = c.PrevisaoLucro,
