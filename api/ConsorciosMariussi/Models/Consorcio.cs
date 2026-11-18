@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace ConsorciosMariussi.Api.Models;
 
 public class Consorcio
@@ -5,6 +7,10 @@ public class Consorcio
     private string _administradora = "";
 
     public int Id { get; set; }
+
+    // Dono do registro (Id do usuário do Identity). Não sai no JSON.
+    [JsonIgnore]
+    public string UsuarioId { get; set; } = "";
 
     // Gravada sem espaços nas pontas.
     public string Administradora

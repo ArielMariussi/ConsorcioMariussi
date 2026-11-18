@@ -39,8 +39,16 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbCo
             e.Property(c => c.TaxaTransferencia).HasPrecision(18, 2);
             e.Property(c => c.Lucro).HasPrecision(18, 2);
 
-            // Administradora + grupo + cota é única (administradora sem diferenciar maiúsculas/minúsculas).
-            e.HasIndex(c => new { c.Administradora, c.Grupo, c.Cota }).IsUnique();
+            // Cada consórcio pertence a um usuário; excluir o usuário exclui os consórcios dele.
+            e.HasOne<IdentityUser>()
+                .WithMany()
+                .HasForeignKey(c => c.UsuarioId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Dentro da conta de cada usuário, administradora + grupo + cota é única
+            // (administradora sem diferenciar maiúsculas/minúsculas).
+            e.HasIndex(c => new { c.UsuarioId, c.Administradora, c.Grupo, c.Cota }).IsUnique();
         });
     }
 }

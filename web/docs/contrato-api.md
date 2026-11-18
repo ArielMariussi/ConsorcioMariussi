@@ -42,7 +42,9 @@ A senha nunca é retornada em nenhuma resposta.
 | dataLucro | string (date) \| null | Opcional |
 | lucro | decimal \| null | Opcional |
 
-A combinação administradora + grupo + cota é única.
+Cada consórcio pertence ao usuário autenticado que o criou: todos os endpoints de consórcio só listam, leem, alteram e excluem os consórcios desse usuário. Consórcio de outro usuário responde 404 Not Found.
+
+A combinação administradora + grupo + cota é única dentro da conta de cada usuário (usuários diferentes podem cadastrar a mesma combinação).
 
 ## Endpoints
 

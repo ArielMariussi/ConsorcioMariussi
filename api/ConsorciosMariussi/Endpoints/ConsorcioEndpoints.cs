@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using ConsorciosMariussi.Api.Contracts;
 using ConsorciosMariussi.Api.Data;
 using ConsorciosMariussi.Api.Models;
@@ -13,11 +14,17 @@ public static class ConsorcioEndpoints
         // Protegido: sem token válido → 401.
         var group = app.MapGroup("/api/consorcios").RequireAuthorization();
 
-        group.MapGet("/", async (AppDbContext db) =>
+        // Cada usuário só enxerga e altera os próprios consórcios.
+        // Consórcio de outro usuário responde 404, como se não existisse.
+
+        group.MapGet("/", async (ClaimsPrincipal user, AppDbContext db) =>
         {
+            var usuarioId = UsuarioId(user);
+
             // Mais recentes primeiro; sem data da compra por último; desempate pelo id.
             var consorcios = await db.Consorcios
                 .AsNoTracking()
+                .Where(c => c.UsuarioId == usuarioId)
                 .OrderByDescending(c => c.DataCompra.HasValue)
                 .ThenByDescending(c => c.DataCompra)
                 .ThenByDescending(c => c.Id)
@@ -26,19 +33,19 @@ public static class ConsorcioEndpoints
             return Results.Ok(consorcios);
         });
 
-        group.MapGet("/{id:int}", async (int id, AppDbContext db) =>
+        group.MapGet("/{id:int}", async (int id, ClaimsPrincipal user, AppDbContext db) =>
         {
-            var consorcio = await db.Consorcios.FindAsync(id);
+            var consorcio = await BuscarDoUsuarioAsync(db, id, user);
             return consorcio is null ? Results.NotFound() : Results.Ok(consorcio);
         });
 
-        group.MapPost("/", async (ConsorcioRequest request, AppDbContext db) =>
+        group.MapPost("/", async (ConsorcioRequest request, ClaimsPrincipal user, AppDbContext db) =>
         {
             var errors = Validate(request);
             if (errors.Count > 0)
                 return Results.ValidationProblem(errors);
 
-            var consorcio = new Consorcio();
+            var consorcio = new Consorcio { UsuarioId = UsuarioId(user) };
             ApplyRequest(consorcio, request);
             db.Consorcios.Add(consorcio);
 
@@ -54,13 +61,13 @@ public static class ConsorcioEndpoints
             return Results.Created($"/api/consorcios/{consorcio.Id}", consorcio);
         });
 
-        group.MapPut("/{id:int}", async (int id, ConsorcioRequest request, AppDbContext db) =>
+        group.MapPut("/{id:int}", async (int id, ConsorcioRequest request, ClaimsPrincipal user, AppDbContext db) =>
         {
             var errors = Validate(request);
             if (errors.Count > 0)
                 return Results.ValidationProblem(errors);
 
-            var consorcio = await db.Consorcios.FindAsync(id);
+            var consorcio = await BuscarDoUsuarioAsync(db, id, user);
             if (consorcio is null)
                 return Results.NotFound();
 
@@ -78,9 +85,9 @@ public static class ConsorcioEndpoints
             return Results.NoContent();
         });
 
-        group.MapDelete("/{id:int}", async (int id, AppDbContext db) =>
+        group.MapDelete("/{id:int}", async (int id, ClaimsPrincipal user, AppDbContext db) =>
         {
-            var consorcio = await db.Consorcios.FindAsync(id);
+            var consorcio = await BuscarDoUsuarioAsync(db, id, user);
             if (consorcio is null)
                 return Results.NotFound();
 
@@ -90,6 +97,18 @@ public static class ConsorcioEndpoints
         });
 
         return app;
+    }
+
+    // Id do usuário logado, vindo do token ("sub"; o JwtBearer o mapeia para NameIdentifier).
+    private static string UsuarioId(ClaimsPrincipal user) =>
+        user.FindFirstValue(ClaimTypes.NameIdentifier)
+        ?? user.FindFirstValue("sub")
+        ?? throw new InvalidOperationException("Token sem identificação do usuário.");
+
+    private static Task<Consorcio?> BuscarDoUsuarioAsync(AppDbContext db, int id, ClaimsPrincipal user)
+    {
+        var usuarioId = UsuarioId(user);
+        return db.Consorcios.FirstOrDefaultAsync(c => c.Id == id && c.UsuarioId == usuarioId);
     }
 
     private static Dictionary<string, string[]> Validate(ConsorcioRequest r)

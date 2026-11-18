@@ -81,6 +81,10 @@ namespace ConsorciosMariussi.Api.Migrations
                         .HasPrecision(18, 2)
                         .HasColumnType("numeric(18,2)");
 
+                    b.Property<string>("UsuarioId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<decimal?>("ValorPago")
                         .HasPrecision(18, 2)
                         .HasColumnType("numeric(18,2)");
@@ -90,7 +94,7 @@ namespace ConsorciosMariussi.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Administradora", "Grupo", "Cota")
+                    b.HasIndex("UsuarioId", "Administradora", "Grupo", "Cota")
                         .IsUnique();
 
                     b.ToTable("Consorcios", null, t =>
@@ -299,6 +303,15 @@ namespace ConsorciosMariussi.Api.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("ConsorciosMariussi.Api.Models.Consorcio", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
